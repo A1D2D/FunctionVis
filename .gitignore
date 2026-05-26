@@ -1,0 +1,8 @@
+.idea/
+.vscode/
+.cache/
+Build
+cmake-build-debug/
+build-debug/
+build-release/
+Libraries/External
