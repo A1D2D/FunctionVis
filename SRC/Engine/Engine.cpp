@@ -1,5 +1,6 @@
 #include "Engine.h"
 
+#include <cstdlib>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -72,7 +73,12 @@ void Engine::loadAssets() {
       if(fragPos != std::string::npos) fileName.erase(fragPos, 5);
 
       std::unique_ptr<Material> material = std::make_unique<Material>(api.get());
-      material->createMaterial(vertShaderSrc, fragShaderSrc);
+      try {
+         material->createMaterial(vertShaderSrc, fragShaderSrc);
+      } catch (const MaterialError& matError) {
+         std::cerr << matError.what() << "\n";
+         exit(-1);
+      }
 
       materials[fileName] = std::move(material);
    }

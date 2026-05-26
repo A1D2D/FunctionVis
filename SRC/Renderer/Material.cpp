@@ -1,7 +1,5 @@
 #include "Material.h"
 
-#include <iostream>
-
 Material::Material(GraphicsApiI* api) : api(api), shaderProg(api->createShaderProgram()) {}
 
 void Material::createMaterial(std::string vertSrc, std::string fragSrc) {
@@ -9,21 +7,21 @@ void Material::createMaterial(std::string vertSrc, std::string fragSrc) {
    std::unique_ptr<ShaderI> fragShader(api->createShader(GraphicsApiI::ShaderType::FRAGMENT));
 
    if(!vertShader->compile(vertSrc)) {
-      std::cout << "vertex compilation failed:\n" << vertShader->getError();
+      throw MaterialError("vertex compilation failed:\n" + vertShader->getError());
    }
 
    if(!fragShader->compile(fragSrc)) {
-      std::cout << "fragment compilation failed:\n" << fragShader->getError();
+      throw MaterialError("fragment compilation failed:\n" + fragShader->getError());
    }
 
    if(!shaderProg->attachShader(vertShader.get())) {
-      std::cout << "failed to attach vert shader\n";
+      throw MaterialError("failed to attach vert shader\n");
    }
    if(!shaderProg->attachShader(fragShader.get())) {
-      std::cout << "failed to attach frag shader\n";
+      throw MaterialError("failed to attach frag shader\n");
    }
    if(!shaderProg->linkProgram()) {
-      std::cout << "" << shaderProg->getError();
+      throw MaterialError("failed to link shader\n" + shaderProg->getError());
    }
 }
 
