@@ -6,6 +6,7 @@
 #include "../Renderer/Mesh.h"
 #include "Engine.h"
 #include "glm/ext/matrix_transform.hpp"
+#include <iostream>
 
 LuaEngine::LuaEngine(GraphicsApiI* api, Engine* engine) : api(api), engine(engine) {
    lua.open_libraries(sol::lib::base);

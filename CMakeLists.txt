@@ -105,4 +105,4 @@ target_link_libraries(FunctionVis PUBLIC
    sol2 lua_static
 )
 
-# target_compile_options(FunctionVis PRIVATE -O3)
+target_compile_options(FunctionVis PRIVATE -O3)
